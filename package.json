@@ -1,0 +1,35 @@
+{
+  "name": "globalstar",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "RSI",
+  "license": "ISC",
+  "scripts": {
+    "prestart": "true",
+    "start": "cross-env NODE_ENV=development ./node_modules/.bin/pm2 start api.js",
+    "poststart": "npm run create-sqlite-db",
+    "stop": "./node_modules/.bin/pm2 kill",
+    "create-sqlite-db": "shx touch ./db/database.sqlite",
+    "drop-sqlite-db": "shx rm ./db/database.sqlite || true",
+    "production": "cross-env NODE_ENV=production node ./api.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-api-routes": "^2.0.0",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "pm2": "^4.4.0",
+    "sequelize": "^5.21.12",
+    "sqlite3": "^4.2.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "eslint": "^7.2.0",
+    "nodemon": "^2.0.4",
+    "shx": "^0.3.2"
+  }
+}
