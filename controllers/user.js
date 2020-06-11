@@ -48,7 +48,7 @@ const user = {
             first_name: body.first_name, 
             last_name: body.last_name, 
             email: body.email,
-            password: body.password,
+            password: bcryptService().password(body.password),
             });        
             const token = authService().issue({ id: user.id });        
             return res.status(200).json({ token, user });
