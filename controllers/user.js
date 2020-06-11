@@ -6,7 +6,6 @@ const authService = require('../services/auth.service')
 const user = {
     login: async function (req, res) {
         const { email, password } = req.body;
-        
         if (email && password) {
             try {
                 const user = await userModel
@@ -25,7 +24,7 @@ const user = {
                     return res.status(200).json({ token, user });
                 }
 
-                    return res.status(401).json({ msg: 'Unauthorized' });
+                return res.status(401).json({ msg: 'Unauthorized' });
             } catch (err) {
                 console.log(err);
                 return res.status(500).json({ msg: 'Internal server error' });
@@ -48,7 +47,7 @@ const user = {
             first_name: body.first_name, 
             last_name: body.last_name, 
             email: body.email,
-            password: bcryptService().password(body.password),
+            password: body.password,
             });        
             const token = authService().issue({ id: user.id });        
             return res.status(200).json({ token, user });

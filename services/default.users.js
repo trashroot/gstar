@@ -1,6 +1,6 @@
 const userModel = require('../models/user.model')
 const bcryptService = require('./bcrypt.service')
-const pass = bcryptService().password('123')
+const pass = bcryptService().password({ password: '123' })
 
 const defaultUsers = [
     {"first_name": "Tom","last_name": "Hank","email": "tom@abc.com","password": pass, "latitude": "123", "longitude": "456"},

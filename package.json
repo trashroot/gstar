@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "prestart": "true",
-    "start": "cross-env NODE_ENV=development ./node_modules/.bin/pm2 start api.js",
+    "start": "cross-env NODE_ENV=development ./node_modules/.bin/pm2 start api.js --watch",
     "poststart": "npm run create-sqlite-db",
     "stop": "./node_modules/.bin/pm2 kill",
     "create-sqlite-db": "shx touch ./db/database.sqlite",
