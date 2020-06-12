@@ -16,12 +16,12 @@ const user = {
                 });
 
                 if (!user) {
-                    return res.status(400).json({ msg: 'Bad Request: User not found' });
+                    return res.status(400).json({ msg: 'User not found' });
                 }
 
                 if (bcryptService().comparePassword(password, user.password)) {
                     const token = authService().issue({ id: user.id });
-                    return res.status(200).json({ token, user });
+                    return res.status(200).json({"msg": "Success" ,token, user });
                 }
 
                 return res.status(401).json({ msg: 'Unauthorized' });
@@ -30,11 +30,11 @@ const user = {
                 return res.status(500).json({ msg: 'Internal server error' });
             }
         }
-        return res.status(400).json({ msg: 'Bad Request: Email or password is wrong' });
+        return res.status(400).json({ msg: 'Email or password is wrong' });
     },
     
     logout: function (req, res) {
-        res.send("Logout working")
+        res.send("Logout")
     },
 
     register: async function (req, res) {
@@ -53,10 +53,14 @@ const user = {
             return res.status(200).json({ token, user });
         } catch (err) {
             console.log(err);
-            return res.status(500).json({ msg: 'Internal server error' });
+            var message = 'Unknown error. Please try again';
+            if(err.errors[0].type == 'unique violation'){
+                message = 'Email already exist';
+            }
+            return res.status(500).json({ msg: message  });
         }
         }
-        return res.status(400).json({ msg: 'Bad Request: Passwords don\'t match' });
+        return res.status(400).json({ msg: 'Passwords don\'t match' });
     },
 
     getAllUsers: async function (req, res) {
@@ -89,7 +93,7 @@ const user = {
             return res.status(500).json({ msg: 'Internal server error' });
         }
         }
-        return res.status(400).json({ msg: 'Bad Request: Passwords don\'t match' });
+        return res.status(400).json({ msg: 'Unknown error' });
     },
     getLocation: async function (req, res) {        
         const user  = req.params.user;
@@ -105,7 +109,7 @@ const user = {
                 });
 
                 if (!user) {
-                    return res.status(400).json({ msg: 'Bad Request: User not found' });
+                    return res.status(400).json({ msg: 'User not found' });
                 }
                 return res.status(200).json({ location });
             } catch (err) {
@@ -113,7 +117,7 @@ const user = {
                 return res.status(500).json({ msg: 'Internal server error' });
             }
         }
-        return res.status(400).json({ msg: 'Bad Request: Email or password is wrong' });
+        return res.status(400).json({ msg: 'Unknown error' });
     },
 
     travelHistory: async function (req, res) {
@@ -125,7 +129,7 @@ const user = {
                 .findAll();
 
                 if (!user) {
-                    return res.status(400).json({ msg: 'Bad Request: User not found' });
+                    return res.status(400).json({ msg: 'User not found' });
                 }
                 return res.status(200).json({ location });
             } catch (err) {
@@ -133,7 +137,7 @@ const user = {
                 return res.status(500).json({ msg: 'Internal server error' });
             }
         }
-        return res.status(400).json({ msg: 'Bad Request: Email or password is wrong' });
+        return res.status(400).json({ msg: 'Unknown error' });
     }
 }
 
