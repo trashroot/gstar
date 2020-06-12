@@ -95,8 +95,10 @@ const user = {
                 email: body.email,
                 password: body.password,
                 });        
-                const token = authService().issue({ id: user.id });        
-                return res.status(200).json({ msg: 'success',token, user,longitude: null,latitude: null });
+                const token = authService().issue({ id: user.id });
+                user.longitude = null
+                user.latitude = null
+                return res.status(200).json({ msg: 'success',token, user });
             } catch (err) {
                 if(err.errors[0].type == 'unique violation'){
                     erro_message.msg = 'Email already exist';
