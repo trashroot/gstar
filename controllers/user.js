@@ -6,6 +6,15 @@ const authService = require('../services/auth.service')
 const user = {
     login: async function (req, res) {
         const { email, password } = req.body;
+        var err_response = 
+        {   
+            msg: 'Unknown error. Please try again',
+            token: null,
+            first_name: null, 
+            last_name: null, 
+            email: null,
+            password: null,
+        }
         if (email && password) {
             try {
                 const user = await userModel
@@ -13,28 +22,39 @@ const user = {
                     where: {
                         email: email,
                     },
-                });
+                });               
 
                 if (!user) {
-                    return res.status(400).json({ msg: 'User not found' });
+                    err_response.msg = 'User not found'
+                    return res.status(400).json(err_response);
                 }
 
                 if (bcryptService().comparePassword(password, user.password)) {
                     const token = authService().issue({ id: user.id });
-                    return res.status(200).json({ token, user });
+                    return res.status(200).json({ 'msg': 'success', token, user });
                 }
-
-                return res.status(401).json({ msg: 'Unauthorized' });
+                err_response.msg = 'Unauthorized'
+                return res.status(401).json( err_response );
             } catch (err) {
-                console.log(err);
-                return res.status(500).json({ msg: 'Internal server error' });
+                err_response.msg = 'Internal server error'
+                return res.status(500).json(err_response);
             }
         }
-        return res.status(400).json({ msg: 'Email or password is wrong' });
+        err_response.msg = 'Email or password is wrong';
+        return res.status(400).json( err_response );
     },
     
     logout: function (req, res) {
-        res.send("Logout")
+        var response = 
+        {   
+            msg: 'logout',
+            token: null,
+            first_name: null, 
+            last_name: null, 
+            email: null,
+            password: null,
+        }
+        return res.status(200).json(response);
     },
 
     register: async function (req, res) {
@@ -50,15 +70,22 @@ const user = {
             password: body.password,
             });        
             const token = authService().issue({ id: user.id });        
-            return res.status(200).json({ token, user });
+            return res.status(200).json({ 'msg': 'success',token, user });
         } catch (err) {
-            console.log(err);
-            var message = 'Unknown error. Please try again';
-            if(err.errors[0].type == 'unique violation'){
-                message = 'Email already exist';
+                var erro_message = 
+                {   
+                    msg: 'Unknown error. Please try again',
+                    token: null,
+                    first_name: null, 
+                    last_name: null, 
+                    email: null,
+                    password: null,
+                }
+                if(err.errors[0].type == 'unique violation'){
+                    erro_message.msg = 'Email already exist';
+                }
+                return res.status(500).json(erro_message);
             }
-            return res.status(500).json({ msg: message  });
-        }
         }
         return res.status(400).json({ msg: 'Passwords don\'t match' });
     },
