@@ -10,10 +10,16 @@ const user = {
         {   
             msg: 'Unknown error. Please try again',
             token: null,
-            first_name: null, 
-            last_name: null, 
-            email: null,
-            password: null,
+            user: {
+                id: null,
+                first_name: null, 
+                last_name: null, 
+                email: null,
+                latitude: null,
+                longitude: null,
+                createdAt: null,
+                updatedAt: null,
+            }            
         }
         if (email && password) {
             try {
@@ -49,45 +55,57 @@ const user = {
         {   
             msg: 'logout',
             token: null,
-            first_name: null, 
-            last_name: null, 
-            email: null,
-            password: null,
+            user: {
+                id: null,
+                first_name: null, 
+                last_name: null,
+                email: null,
+                latitude: null,
+                longitude: null,
+                createdAt: null,
+                updatedAt: null,
+            }            
         }
         return res.status(200).json(response);
     },
 
     register: async function (req, res) {
         const { body } = req;
-        // console.log(req);
+        var erro_message = 
+        {   
+            msg: 'Unknown error. Please try again',
+            token: null,
+            user: {
+                id: null,
+                first_name: null, 
+                last_name: null, 
+                email: null,
+                latitude: null,
+                longitude: null,
+                createdAt: null,
+                updatedAt: null,
+            }            
+        }
             
         if (body.password === body.password2) {
-        try {
-            const user = await userModel.create({
-            first_name: body.first_name, 
-            last_name: body.last_name, 
-            email: body.email,
-            password: body.password,
-            });        
-            const token = authService().issue({ id: user.id });        
-            return res.status(200).json({ 'msg': 'success',token, user });
-        } catch (err) {
-                var erro_message = 
-                {   
-                    msg: 'Unknown error. Please try again',
-                    token: null,
-                    first_name: null, 
-                    last_name: null, 
-                    email: null,
-                    password: null,
-                }
+            try {
+                const user = await userModel.create({
+                first_name: body.first_name, 
+                last_name: body.last_name, 
+                email: body.email,
+                password: body.password,
+                });        
+                const token = authService().issue({ id: user.id });        
+                return res.status(200).json({ 'msg': 'success',token, user });
+            } catch (err) {                
                 if(err.errors[0].type == 'unique violation'){
                     erro_message.msg = 'Email already exist';
                 }
                 return res.status(500).json(erro_message);
             }
         }
-        return res.status(400).json({ msg: 'Passwords don\'t match' });
+        erro_message.msg = 'Passwords don\'t match';
+        return res.status(400).json(erro_message);
     },
 
     getAllUsers: async function (req, res) {
