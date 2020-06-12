@@ -21,7 +21,7 @@ const user = {
 
                 if (bcryptService().comparePassword(password, user.password)) {
                     const token = authService().issue({ id: user.id });
-                    return res.status(200).json({"msg": "Success" ,token, user });
+                    return res.status(200).json({ token, user });
                 }
 
                 return res.status(401).json({ msg: 'Unauthorized' });
