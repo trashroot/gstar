@@ -4,6 +4,8 @@ const expressApiRoutes = require('express-api-routes')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const cors = require('cors')
+const path = require('path')
+const ejs = require('ejs')
 const defUser = require('./services/default.users') // Insert default records
 
 const config = require('./config/config')
@@ -14,6 +16,11 @@ const environment = process.env.NODE_ENV;
 
 const app = express()
 
+app.set('views', path.join(process.cwd(), 'views'))
+app.set('view engine', 'ejs')
+app.engine('html', ejs.renderFile)
+
+app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
@@ -22,6 +29,10 @@ app.use(helmet({
     frameguard: false,
     ieNoOpen: false,
 }))
+
+app.get('/', function (req, res) {
+    res.render('index.html', {title: 'Working'})    
+})
 
 const api = new expressApiRoutes({
     routes: routes,

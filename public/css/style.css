@@ -1,0 +1,23 @@
+#map {
+  height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin-left: 2%;
+  margin-right: 2%;
+  padding: 0;
+  background-color:#e6cc80;
+}
+
+#header_menu{
+    height: 25px;
+}
+
+#floating-panel-left{
+  float: left;        
+}
+
+#floating-panel-right{
+    float: right;
+}
