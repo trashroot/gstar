@@ -2,6 +2,7 @@ const userModel = require('../models/user.model')
 const locationModel = require('../models/location.model')
 const bcryptService = require('../services/bcrypt.service')
 const authService = require('../services/auth.service')
+const { Op } = require("sequelize");
 
 const user = {
     login: async function (req, res) {
@@ -147,10 +148,10 @@ const user = {
         
         if (user) {
             try {
-                const location = await locationModel
+                const location = await userModel
                 .findOne({
                     where: {
-                        user: user,
+                        id: user,
                     },
                     order: [ [ 'createdAt', 'DESC' ]]
                 });
@@ -173,7 +174,16 @@ const user = {
         if (user) {
             try {
                 const location = await locationModel
-                .findAll();
+                .findAll({
+                    where: {
+                        user: user,                        
+                        createdAt: {
+                            [Op.lt]: new Date(),
+                            [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
+                        }
+                        
+                    }
+                });
 
                 if (!user) {
                     return res.status(400).json({ msg: 'User not found' });

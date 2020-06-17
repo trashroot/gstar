@@ -30,6 +30,9 @@ const User = database.define('User', {
   longitude: {
       type: Sequelize.STRING,
   },
+  image: {
+    type: Sequelize.STRING,
+},
 }, { hooks, tableName });
 
 // eslint-disable-next-line
