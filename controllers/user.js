@@ -116,10 +116,24 @@ const user = {
     },
 
     getAllUsers: async function (req, res) {
+        const { id } = req.token;
+                
+        if(!id){
+            return res.status(200).json({ msg: 'Invalid token' });
+        }
+
         try {
-            const users = await userModel.findAll();        
+            const users = await userModel.findAll({
+                where:{
+                    id: {
+                        [Op.ne]: id
+                    }
+                }
+            });        
             return res.status(200).json({ users });
-        } catch (err) {            
+        } catch (err) {
+            console.log(err);
+            
             return res.status(500).json({ msg: 'Internal server error' });
         }
     },
