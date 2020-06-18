@@ -4,10 +4,10 @@ var selectedUserName = '';
 var marker = {};
 var linePath = [];
 var markerCount = 1;
-var markerLabel = 'S';
-var selectedUserData ={}
+var markerLabel = '';
+var selectedUserData = {}
 // eslint-disable-next-line no-undef
-$(document).ready(function(){
+$(document).ready(function() {
     // eslint-disable-next-line no-undef
     $.ajax({
         type: "GET",
@@ -83,7 +83,7 @@ function updateLocation(data) {
             });
 
             markerCount++;
-            markerLabel = 'D';
+            // markerLabel = 'D';
         }
 
         var autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
@@ -96,6 +96,12 @@ function updateLocation(data) {
         });
 
         autocomplete.addListener('place_changed', function() {
+        
+          if (selectedUser == undefined) {
+            document.getElementById('address').value = '';
+            window.alert("Please Select the user first");
+            return;
+          }
         //   infowindow.close();
         //   marker.setVisible(false);
           var place = autocomplete.getPlace();
@@ -113,9 +119,20 @@ function updateLocation(data) {
             map.setCenter(place.geometry.location);
             map.setZoom(18);  // Why 17? Because it looks good.
           }
-          marker.setPosition(place.geometry.location);
+          // marker.setPosition(place.geometry.location);
           marker.setVisible(true);
-
+          /* Set marker after search location START */
+          linePath.push(place.geometry.location);
+          updateMarker(place.geometry.location)
+          setLinePath(linePath);
+          var selectedUserRawData = place.geometry.location.toJSON();
+              selectedUserData.user = selectedUser;
+              selectedUserData.latitude = selectedUserRawData.lat;
+              selectedUserData.longitude = selectedUserRawData.lng;
+              console.log(selectedUserData);
+              updateLocation(selectedUserData)
+          /* Set marker after search location END */
+          
           // var address = '';
           // if (place.address_components) {
           //   address = [

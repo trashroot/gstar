@@ -2,12 +2,15 @@
 html, body {
   height: 100%;
   margin-left: 2%;
-  margin-right: 2%;
-  padding: 0;
-  background-color:#e6cc80;
+  margin-right: 2%; 
+  background-color:#020202;
 }
 
 #map {
   height: 100%;
   margin-top: 10px;
+}
+
+.input-box{
+  margin: 20px -15px -5px -15px;
 }

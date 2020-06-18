@@ -83,6 +83,7 @@ const user = {
                 email: null,
                 latitude: null,
                 longitude: null,
+                image: null,
                 createdAt: null,
                 updatedAt: null,
             }            
@@ -91,10 +92,13 @@ const user = {
         if (body.password === body.password2) {
             try {
                 const user = await userModel.create({
-                first_name: body.first_name, 
-                last_name: body.last_name, 
-                email: body.email,
-                password: body.password,
+                    first_name: body.first_name, 
+                    last_name: body.last_name, 
+                    email: body.email,
+                    password: body.password,
+                    latitude: body.latitude,
+                    longitude: body.longitude,
+                    image: body.image
                 });        
                 const token = authService().issue({ id: user.id });
                 user.longitude = null
