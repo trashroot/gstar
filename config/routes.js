@@ -18,6 +18,11 @@ module.exports = {
         method: 'getAllUsers',
         policies: ['auth.policy']
       },
+      '/user/alluser': {
+        controller: 'user',
+        method: 'getAllUsersForDash',
+        policies: ['auth.policy']
+      },
       '/user/update-location': {
         controller: 'user',
         method: 'saveLocation',

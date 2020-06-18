@@ -137,6 +137,14 @@ const user = {
             return res.status(500).json({ msg: 'Internal server error' });
         }
     },
+    getAllUsersForDash: async function (req, res) {
+        try {
+            const users = await userModel.findAll();        
+            return res.status(200).json({ users });
+        } catch (err) {
+            return res.status(500).json({ msg: 'Internal server error' });
+        }
+    },
     saveLocation: async function (req, res) {
         const { user, latitude, longitude } = req.body;
             

@@ -11,12 +11,13 @@ $(document).ready(function() {
     // eslint-disable-next-line no-undef
     $.ajax({
         type: "GET",
-        url: "http://18.222.132.210:2017/api/user/list",
+        url: "http://18.222.132.210:2017/api/user/alluser",
         cache: false,
         // dataType: 'json',
         headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o'},
 
-        success: function(res){
+        success: function(res){console.log(res);
+        
             if(res['users'].length == 0){
                 // eslint-disable-next-line no-undef
                 alert('No user found. Please try again')
@@ -132,7 +133,7 @@ function updateLocation(data) {
               console.log(selectedUserData);
               updateLocation(selectedUserData)
           /* Set marker after search location END */
-          
+
           // var address = '';
           // if (place.address_components) {
           //   address = [
