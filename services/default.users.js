@@ -3,10 +3,11 @@ const bcryptService = require('./bcrypt.service')
 const pass = bcryptService().password({ password: '123' })
 
 const defaultUsers = [
-    {"first_name": "Tom","last_name": "Hank","email": "tom@abc.com","password": pass, "latitude": null, "longitude": null, "image": "images/user.png"},
-    {"first_name": "Max","last_name": "Payne","email": "max@abc.com","password": pass, "latitude": null, "longitude": null, "image": "images/user.png"},
-    {"first_name": "John","last_name": "Doe","email": "john@abc.com","password": pass, "latitude": null, "longitude": null, "image": "images/user.png"},
-    {"first_name": "Tommy","last_name": "Maddison","email": "tommy@abc.com","password": pass, "latitude": null, "longitude": null, "image": "images/user.png"},
+    {"first_name": "Luis","last_name": "Moreno","email": "luis@globalstar.com","password": 123, "latitude": null, "longitude": null, "image": "images/user.png"},
+    {"first_name": "Luis1","last_name": "Moreno","email": "luis1@globalstar.com","password": 123, "latitude": null, "longitude": null, "image": "images/user.png"},
+    {"first_name": "Ankit","last_name": "Chauhan","email": "ankit@rsystems.com","password": 123, "latitude": null, "longitude": null, "image": "images/user.png"},
+    {"first_name": "Ashish","last_name": "Anjan","email": "anjan@rsystems.com","password": 123, "latitude": null, "longitude": null, "image": "images/user.png"},
+    {"first_name": "Ashish","last_name": "Lavanya","email": "ashish@rsystems.com","password": 123, "latitude": null, "longitude": null, "image": "images/user.png"},
 ]
 
 const uploadDefaultUsers = async ()=>{
